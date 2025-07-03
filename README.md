@@ -9,6 +9,16 @@ This module leverages the [zeebe-node](https://creditsenseau.github.io/zeebe-cli
 
 **Please upgrade node-red-contrib-zeebe to v0.7+ for Zeebe v1.0 or current Camunda Platform 8 support!** Zeebe versions prior to v1.0 are not supported anymore.
 
+## Security and Best Practices
+
+This package follows Node-RED and FlowFuse best practices for security and maintainability:
+
+- **Input Validation**: All nodes validate input payloads and required fields
+- **Error Handling**: Comprehensive error handling with proper context
+- **Resource Management**: Proper cleanup of workers and connections
+- **Security**: See [SECURITY.md](SECURITY.md) for detailed security considerations
+- **Migration**: See [MIGRATION.md](MIGRATION.md) for dependency migration notes
+
 Learn more about how these nodes can be used from basic [example flows](https://flows.nodered.org/collection/IC--I_j4q-Mt).
 
 ### worker / complete
