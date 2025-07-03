@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('deploy', {
-        category: 'zeebe',
+        category: 'camunda',,
         color: '#C0DEED',
         defaults: {
             name: { value: '' },
-            zeebe: { required: true, type: 'zeebe' },
+            camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'zeebe.png',
+        icon: 'camunda.png',,
         label: function () {
             return this.name || 'deploy';
         },
@@ -21,8 +21,8 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-zeebe"><i class="fa fa-server"></i> Zeebe Broker</label>
-        <input type="text" id="node-input-zeebe" placeholder="Zeebe Broker" />
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
     </div>
 </script>
 

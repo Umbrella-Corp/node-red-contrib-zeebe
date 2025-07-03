@@ -6,7 +6,7 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         const node = this;
 
-        this.zbc = RED.nodes.getNode(config.zeebe).zbc;
+        this.zbc = RED.nodes.getNode(config.camunda).zbc;
 
         node.on('input', function (msg) {
             // Input validation

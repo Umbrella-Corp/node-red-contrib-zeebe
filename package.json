@@ -37,7 +37,7 @@
   },
   "node-red": {
     "nodes": {
-      "zeebe": "src/nodes/zeebe.js",
+      "camunda": "src/nodes/camunda.js",
       "process-instance": "src/nodes/process-instance.js",
       "task-worker": "src/nodes/task-worker.js",
       "complete-task": "src/nodes/complete-task.js",

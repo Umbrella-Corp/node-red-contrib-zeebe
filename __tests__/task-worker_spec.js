@@ -1,6 +1,6 @@
 const helper = require('node-red-node-test-helper');
 const taskWorkerNode = require('../src/nodes/task-worker.js');
-const zeebeNode = require('../src/nodes/zeebe');
+const camundaNode = require('../src/nodes/camunda');
 
 helper.init(require.resolve('node-red'));
 
@@ -18,8 +18,8 @@ describe('task-worker node', () => {
         const flow = [
             {
                 id: 'n1',
-                type: 'zeebe',
-                name: 'zeebe',
+                type: 'camunda',
+                name: 'camunda',
                 contactPoint: 'localhost:1234',
             },
             {
@@ -27,13 +27,13 @@ describe('task-worker node', () => {
                 type: 'task-worker',
                 name: 'task-worker',
                 taskType: 'test-task',
-                zeebe: 'n1',
+                camunda: 'n1',
                 wires: [['n3']],
             },
             { id: 'n3', type: 'helper' },
         ];
 
-        helper.load([zeebeNode, taskWorkerNode], flow, () => {
+        helper.load([camundaNode, taskWorkerNode], flow, () => {
             const n3 = helper.getNode('n3');
 
             n3.on('input', (msg) => {

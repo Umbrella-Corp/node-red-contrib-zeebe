@@ -19,15 +19,15 @@ module.exports = function (RED) {
                 return;
             }
 
-            // Validate zeebe connection
-            const zeebeConfig = RED.nodes.getNode(config.zeebe);
-            if (!zeebeConfig || !zeebeConfig.zbc) {
-                node.error('Invalid or missing Zeebe configuration', msg);
-                status.error(node, 'No Zeebe connection');
+            // Validate camunda connection
+            const camundaConfig = RED.nodes.getNode(config.camunda);
+            if (!camundaConfig || !camundaConfig.zbc) {
+                node.error('Invalid or missing Camunda configuration', msg);
+                status.error(node, 'No Camunda connection');
                 return;
             }
 
-            this.zbc = zeebeConfig.zbc;
+            this.zbc = camundaConfig.zbc;
             const variables = msg.payload.variables || {};
 
             try {

@@ -3,7 +3,7 @@ const logger = require('../util/logger');
 module.exports = function (RED) {
     const { Camunda8 } = require('@camunda8/sdk');
 
-    function Zeebe(config) {
+    function Camunda(config) {
         RED.nodes.createNode(this, config);
 
         const node = this;
@@ -63,7 +63,7 @@ module.exports = function (RED) {
                 node.zbc.stdout = clientOptions.stdout;
             }
         } catch (err) {
-            node.error('Failed to create Zeebe client: ' + err.message);
+            node.error('Failed to create Camunda client: ' + err.message);
             return;
         }
 
@@ -73,7 +73,7 @@ module.exports = function (RED) {
                     node.log('All workers closed');
                     done();
                 }).catch((err) => {
-                    node.error('Error closing Zeebe client: ' + err.message);
+                    node.error('Error closing Camunda client: ' + err.message);
                     done();
                 });
             } else {
@@ -82,5 +82,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('zeebe', Zeebe);
+    RED.nodes.registerType('camunda', Camunda);
 };
