@@ -12,7 +12,7 @@ const messageNode = require('../src/nodes/message');
 const workflow01 = require('../resources/tests/workflow01');
 const workflow02 = require('../resources/tests/workflow02');
 
-jest.unmock('zeebe-node');
+jest.unmock('@camunda8/sdk');
 jest.setTimeout(30000);
 
 helper.init(require.resolve('node-red'));

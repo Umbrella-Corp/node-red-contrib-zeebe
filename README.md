@@ -1,13 +1,12 @@
-# node-red-contrib-zeebe-2 (fork of node-red-contrib-zeebe, updated to zeebe-node 8.2.x)
-### (Work in progress)
+# node-red-contrib-zeebe-2 (fork of node-red-contrib-zeebe, migrated to Camunda 8 SDK)
 
 ![Compatible with: Camunda Platform 8.2+](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)
 
 ![npm](https://img.shields.io/npm/v/node-red-contrib-zeebe-2)
 
-This module leverages the [zeebe-node](https://creditsenseau.github.io/zeebe-client-node-js/index.html) client library to bring Zeebe awesomeness to Node-RED!
+This module leverages the official [Camunda 8 SDK](https://github.com/camunda/camunda-8-js-sdk) to bring Zeebe awesomeness to Node-RED!
 
-**Please upgrade node-red-contrib-zeebe to v0.7+ for Zeebe v1.0 or current Camunda Platform 8 support!** Zeebe versions prior to v1.0 are not supported anymore.
+**This package has been migrated from the deprecated zeebe-node package to the official @camunda8/sdk package for better security and ongoing support.**
 
 ## Security and Best Practices
 

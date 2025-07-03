@@ -1,7 +1,7 @@
 const logger = require('../util/logger');
 
 module.exports = function (RED) {
-    const ZB = require('zeebe-node');
+    const { Camunda8 } = require('@camunda8/sdk');
 
     function Zeebe(config) {
         RED.nodes.createNode(this, config);
@@ -14,16 +14,21 @@ module.exports = function (RED) {
             return;
         }
 
-        const options = {
-            useTLS: Boolean(config.useTls),
-            eagerConnection: Boolean(config.eagerConnection),
-            oAuth: {
-                url: config.oAuthUrl,
-                audience: config.contactPoint.split(':')[0],
-                clientId: config.clientId,
-                clientSecret: config.clientSecret,
-                cacheOnDisk: true,
-            },
+        // Map Node-RED configuration to Camunda8 SDK format
+        const c8Config = {
+            ZEEBE_GRPC_ADDRESS: config.contactPoint,
+            CAMUNDA_SECURE_CONNECTION: Boolean(config.useTls),
+        };
+
+        // Add OAuth configuration if provided
+        if (config.oAuthUrl && config.oAuthUrl !== '') {
+            c8Config.CAMUNDA_OAUTH_URL = config.oAuthUrl;
+            c8Config.ZEEBE_CLIENT_ID = config.clientId;
+            c8Config.ZEEBE_CLIENT_SECRET = config.clientSecret;
+        }
+
+        // Configure logging and callbacks
+        const clientOptions = {
             onReady: () => {
                 node.log(`Connected to ${config.contactPoint}`);
                 node.emit('ready');
@@ -37,15 +42,26 @@ module.exports = function (RED) {
         };
 
         if (config.useLongpoll) {
-            options.longPoll = 600000;
-        }
-
-        if (config.oAuthUrl === '') {
-            delete options.oAuth;
+            clientOptions.longPoll = 600000;
         }
 
         try {
-            node.zbc = new ZB.ZBClient(config.contactPoint, options);
+            const c8 = new Camunda8(c8Config);
+            node.zbc = c8.getZeebeGrpcApiClient();
+
+            // Apply additional client options that aren't part of the constructor
+            if (clientOptions.onReady) {
+                node.zbc.onReady = clientOptions.onReady;
+            }
+            if (clientOptions.onConnectionError) {
+                node.zbc.onConnectionError = clientOptions.onConnectionError;
+            }
+            if (clientOptions.loglevel) {
+                node.zbc.loglevel = clientOptions.loglevel;
+            }
+            if (clientOptions.stdout) {
+                node.zbc.stdout = clientOptions.stdout;
+            }
         } catch (err) {
             node.error('Failed to create Zeebe client: ' + err.message);
             return;
