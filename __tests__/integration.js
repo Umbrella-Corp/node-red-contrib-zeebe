@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const helper = require('node-red-node-test-helper');
 
-const zeebeNode = require('../src/nodes/zeebe');
+const camundaNode = require('../src/nodes/camunda');
 const taskWorkerNode = require('../src/nodes/task-worker');
 const deployNode = require('../src/nodes/deploy');
 const processInstanceNode = require('../src/nodes/process-instance');
@@ -38,7 +38,7 @@ describe('integration', () => {
         const flow = [
             {
                 id: 'zeebe-node',
-                type: 'zeebe',
+                type: 'camunda',
                 name: 'zeebe',
                 contactPoint: '127.0.0.1',
                 oAuthUrl: '',
@@ -52,14 +52,14 @@ describe('integration', () => {
                 id: 'deploy-node',
                 type: 'deploy',
                 name: 'deploy',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
                 wires: [['n1']],
             },
             {
                 id: 'process-instance-node',
                 type: 'process-instance',
                 name: 'process-instance',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
                 wires: [['n2']],
             },
             {
@@ -67,7 +67,7 @@ describe('integration', () => {
                 type: 'task-worker',
                 name: 'task-worker',
                 taskType: 'node-red',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
                 wires: [['complete-task-node']],
             },
             {
@@ -83,7 +83,7 @@ describe('integration', () => {
 
         helper.load(
             [
-                zeebeNode,
+                camundaNode,
                 taskWorkerNode,
                 deployNode,
                 processInstanceNode,
@@ -147,7 +147,7 @@ describe('integration', () => {
         const flow = [
             {
                 id: 'zeebe-node',
-                type: 'zeebe',
+                type: 'camunda',
                 name: 'zeebe',
                 contactPoint: '127.0.0.1',
                 oAuthUrl: '',
@@ -161,27 +161,27 @@ describe('integration', () => {
                 id: 'deploy-node',
                 type: 'deploy',
                 name: 'deploy',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
                 wires: [['n1']],
             },
             {
                 id: 'start-message-node',
                 type: 'start-message',
                 name: 'start-message',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
             },
             {
                 id: 'message-node',
                 type: 'message',
                 name: 'message',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
             },
             {
                 id: 'task-worker-node',
                 type: 'task-worker',
                 name: 'task-worker',
                 taskType: 'node-red2',
-                zeebe: 'zeebe-node',
+                camunda: 'zeebe-node',
                 wires: [['complete-task-node']],
             },
             {
@@ -196,7 +196,7 @@ describe('integration', () => {
 
         helper.load(
             [
-                zeebeNode,
+                camundaNode,
                 taskWorkerNode,
                 completeTaskNode,
                 deployNode,
