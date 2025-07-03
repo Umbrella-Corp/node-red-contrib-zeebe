@@ -16,7 +16,7 @@ describe('message node', () => {
     });
 
     it('should call zbc.publishMessage', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'zeebe',
@@ -51,7 +51,7 @@ describe('message node', () => {
 
                 expect(mockCallParams.name).toEqual(params.name);
                 expect(mockCallParams.correlationKey).toEqual(
-                    params.correlationKey
+                    params.correlationKey,
                 );
                 expect(mockCallParams.timeToLive).toEqual(params.timeToLive);
                 expect(mockCallParams.variables).toEqual(params.variables);

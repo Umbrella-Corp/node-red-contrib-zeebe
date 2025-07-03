@@ -7,12 +7,12 @@ const jobMock = {
     complete: jest.fn(),
     fail: jest.fn(),
     error: jest.fn(),
-    variables: { workflowId: 123 }
+    variables: { workflowId: 123 },
 };
 
 describe('complete-task node', () => {
     beforeEach((done) => {
-         helper.startServer(done);
+        helper.startServer(done);
         jest.resetAllMocks();
     });
 
@@ -22,7 +22,7 @@ describe('complete-task node', () => {
     });
 
     it('should call job.complete with variables', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'complete-task',
@@ -42,14 +42,14 @@ describe('complete-task node', () => {
                 payload: {
                     job: jobMock,
                     variables: jobMock.variables,
-                   
+
                 },
             });
         });
     });
 
     it('should call complete.failure', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'complete-task',
@@ -65,7 +65,7 @@ describe('complete-task node', () => {
             jobMock.fail.mockImplementation(() => {
                 expect(jobMock.fail).toHaveBeenCalledTimes(1);
                 expect(jobMock.fail).toHaveBeenCalledWith(
-                    failureMessage
+                    failureMessage,
                 );
                 done();
             });
@@ -81,7 +81,7 @@ describe('complete-task node', () => {
     });
 
     it('should call complete.error', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'complete-task',
@@ -102,7 +102,7 @@ describe('complete-task node', () => {
                         errorCode,
                         errorMessage,
                         variables: jobMock.variables,
-                    }
+                    },
                 );
                 done();
             });

@@ -6,13 +6,34 @@ module.exports = function (RED) {
         const node = this;
 
         node.on('input', async function (msg) {
-            this.zbc = RED.nodes.getNode(config.zeebe).zbc;
+            // Input validation
+            if (!msg.payload) {
+                node.error('Missing payload in message', msg);
+                status.error(node, 'Missing payload');
+                return;
+            }
+
+            if (!msg.payload.processId) {
+                node.error('Missing processId in payload', msg);
+                status.error(node, 'Missing processId');
+                return;
+            }
+
+            // Validate zeebe connection
+            const zeebeConfig = RED.nodes.getNode(config.zeebe);
+            if (!zeebeConfig || !zeebeConfig.zbc) {
+                node.error('Invalid or missing Zeebe configuration', msg);
+                status.error(node, 'No Zeebe connection');
+                return;
+            }
+
+            this.zbc = zeebeConfig.zbc;
             const variables = msg.payload.variables || {};
 
             try {
                 const result = await this.zbc.createProcessInstance(
                     msg.payload.processId,
-                    variables
+                    variables,
                 );
 
                 msg.payload = { ...msg.payload, ...result };
@@ -22,7 +43,7 @@ module.exports = function (RED) {
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
-                console.error(err);
+                node.error(err);
             }
         });
     }

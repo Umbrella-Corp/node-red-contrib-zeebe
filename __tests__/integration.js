@@ -35,7 +35,7 @@ describe('integration', () => {
      * - complete a task
      */
     it('create instance, complete task', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'zeebe-node',
                 type: 'zeebe',
@@ -98,7 +98,7 @@ describe('integration', () => {
                 const n2 = helper.getNode('n2');
 
                 // complete task
-                completeTask.on('input', (msg) => {
+                completeTask.on('input', () => {
                     Promise.resolve().then(() => {
                         done();
                     });
@@ -107,7 +107,7 @@ describe('integration', () => {
                 n2.on('input', (msg) => {
                     Promise.resolve().then(() => {
                         expect(msg.payload.processInstanceKey).toEqual(
-                            expect.any(String)
+                            expect.any(String),
                         );
                     });
                 });
@@ -131,7 +131,7 @@ describe('integration', () => {
                         resourceName: 'workflow01.bpmn',
                     },
                 });
-            }
+            },
         );
     });
 
@@ -144,7 +144,7 @@ describe('integration', () => {
      * - complete a task
      */
     it('publish start message, publish message, complete task', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'zeebe-node',
                 type: 'zeebe',
@@ -214,13 +214,13 @@ describe('integration', () => {
                 const processId = uuidv4();
 
                 // complete task
-                completeTask.on('input', (msg) => {
+                completeTask.on('input', () => {
                     Promise.resolve().then(() => {
                         done();
                     });
                 });
 
-                n1.on('input', (msg) => {
+                n1.on('input', () => {
                     Promise.resolve().then(() => {
                         // publish start message
                         startMessage.receive({
@@ -249,7 +249,7 @@ describe('integration', () => {
                         resourceName: 'workflow02.bpmn',
                     },
                 });
-            }
+            },
         );
     });
 });

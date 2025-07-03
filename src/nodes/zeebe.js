@@ -8,23 +8,28 @@ module.exports = function (RED) {
 
         const node = this;
 
+        // Validate configuration
+        if (!config.contactPoint) {
+            node.error('Missing contact point configuration');
+            return;
+        }
+
         const options = {
             useTLS: Boolean(config.useTls),
-            eagerConnection:Boolean(config.eagerConnection),
+            eagerConnection: Boolean(config.eagerConnection),
             oAuth: {
                 url: config.oAuthUrl,
                 audience: config.contactPoint.split(':')[0],
                 clientId: config.clientId,
                 clientSecret: config.clientSecret,
                 cacheOnDisk: true,
-               
             },
             onReady: () => {
                 node.log(`Connected to ${config.contactPoint}`);
                 node.emit('ready');
             },
-            onConnectionError: () => {
-                node.log(`Connection Error`);
+            onConnectionError: (error) => {
+                node.log('Connection Error: ' + (error && error.message ? error.message : 'Unknown error'));
                 node.emit('connectionError');
             },
             loglevel: 'DEBUG',
@@ -39,13 +44,25 @@ module.exports = function (RED) {
             delete options.oAuth;
         }
 
-        node.zbc = new ZB.ZBClient(config.contactPoint, options);
+        try {
+            node.zbc = new ZB.ZBClient(config.contactPoint, options);
+        } catch (err) {
+            node.error('Failed to create Zeebe client: ' + err.message);
+            return;
+        }
 
         node.on('close', function (done) {
-            return node.zbc.close().then(() => {
-                node.log('All workers closed');
+            if (node.zbc) {
+                return node.zbc.close().then(() => {
+                    node.log('All workers closed');
+                    done();
+                }).catch((err) => {
+                    node.error('Error closing Zeebe client: ' + err.message);
+                    done();
+                });
+            } else {
                 done();
-            });
+            }
         });
     }
 
