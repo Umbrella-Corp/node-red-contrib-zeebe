@@ -23,6 +23,7 @@
     "microservice"
   ],
   "dependencies": {
+    "@camunda8/sdk": "^8.7.17",
     "uuid": "^8.3.2",
     "zeebe-node": "^8.2.5"
   },
@@ -50,6 +51,9 @@
     "testEnvironment": "node"
   },
   "lint-staged": {
-    "*.js": ["eslint --cache --fix", "prettier --write"]
+    "*.js": [
+      "eslint --cache --fix",
+      "prettier --write"
+    ]
   }
 }
