@@ -16,7 +16,7 @@ describe('deploy node', () => {
     });
 
     it('should call zbc.createProcessInstance', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'zeebe',
@@ -43,11 +43,11 @@ describe('deploy node', () => {
             n3.on('input', (msg) => {
                 Promise.resolve().then(() => {
                     expect(n1.zbc.createProcessInstance).toHaveBeenCalledTimes(
-                        1
+                        1,
                     );
                     expect(n1.zbc.createProcessInstance).toHaveBeenCalledWith(
                         'MyProcess',
-                        '{"myVar": "Foo"}'
+                        '{"myVar": "Foo"}',
                     );
                     expect(msg.payload).toEqual({
                         processId: 'MyProcess',

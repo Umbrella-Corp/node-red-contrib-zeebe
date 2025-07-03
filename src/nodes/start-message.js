@@ -9,6 +9,19 @@ module.exports = function (RED) {
         this.zbc = RED.nodes.getNode(config.zeebe).zbc;
 
         node.on('input', function (msg) {
+            // Input validation
+            if (!msg.payload) {
+                node.error('Missing payload in message', msg);
+                status.error(node, 'Missing payload');
+                return;
+            }
+
+            if (!msg.payload.name) {
+                node.error('Missing message name in payload', msg);
+                status.error(node, 'Missing message name');
+                return;
+            }
+
             const message = { ...msg.payload, messageId: uuidv4() };
 
             try {

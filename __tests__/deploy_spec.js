@@ -16,7 +16,7 @@ describe('deploy node', () => {
     });
 
     it('should call zbc.deployResource', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'zeebe',
@@ -47,9 +47,9 @@ describe('deploy node', () => {
                         expect.objectContaining({
                             name: expect.stringMatching(/^test.bpmn$/),
                             process: expect.any(Buffer),
-                        })
+                        }),
                     );
-                    expect(msg.payload.bpmnProcessId).toEqual('my-process' )
+                    expect(msg.payload.bpmnProcessId).toEqual('my-process' );
                     done();
                 });
             });

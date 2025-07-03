@@ -16,7 +16,7 @@ describe('start-message node', () => {
     });
 
     it('should call zbc.publishStarthMessage', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'zeebe',

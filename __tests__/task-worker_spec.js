@@ -15,7 +15,7 @@ describe('task-worker node', () => {
     });
 
     it('should output response from zeebe-node', (done) => {
-        var flow = [
+        const flow = [
             {
                 id: 'n1',
                 type: 'zeebe',
@@ -26,6 +26,7 @@ describe('task-worker node', () => {
                 id: 'n2',
                 type: 'task-worker',
                 name: 'task-worker',
+                taskType: 'test-task',
                 zeebe: 'n1',
                 wires: [['n3']],
             },
