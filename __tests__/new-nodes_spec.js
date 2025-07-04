@@ -2,7 +2,6 @@ const helper = require('node-red-node-test-helper');
 const cancelProcessInstanceNode = require('../src/nodes/cancel-process-instance');
 const setVariablesNode = require('../src/nodes/set-variables');
 const broadcastSignalNode = require('../src/nodes/broadcast-signal');
-const camundaNode = require('../src/nodes/camunda');
 
 helper.init(require.resolve('node-red'));
 
@@ -33,13 +32,12 @@ describe('New Camunda 8 Nodes', () => {
             ];
             helper.load(cancelProcessInstanceNode, flow, () => {
                 const n1 = helper.getNode('n1');
-                const n2 = helper.getNode('n2');
-                
+
                 n1.on('call:error', (msg) => {
                     expect(msg.toString()).toContain('Missing payload');
                     done();
                 });
-                
+
                 n1.receive({});
             });
         });
@@ -51,12 +49,12 @@ describe('New Camunda 8 Nodes', () => {
             ];
             helper.load(cancelProcessInstanceNode, flow, () => {
                 const n1 = helper.getNode('n1');
-                
+
                 n1.on('call:error', (msg) => {
                     expect(msg.toString()).toContain('Missing processInstanceKey');
                     done();
                 });
-                
+
                 n1.receive({ payload: {} });
             });
         });
@@ -79,12 +77,12 @@ describe('New Camunda 8 Nodes', () => {
             ];
             helper.load(setVariablesNode, flow, () => {
                 const n1 = helper.getNode('n1');
-                
+
                 n1.on('call:error', (msg) => {
                     expect(msg.toString()).toContain('Missing variables');
                     done();
                 });
-                
+
                 n1.receive({ payload: { processInstanceKey: '123' } });
             });
         });
@@ -107,12 +105,12 @@ describe('New Camunda 8 Nodes', () => {
             ];
             helper.load(broadcastSignalNode, flow, () => {
                 const n1 = helper.getNode('n1');
-                
+
                 n1.on('call:error', (msg) => {
                     expect(msg.toString()).toContain('Missing signalName');
                     done();
                 });
-                
+
                 n1.receive({ payload: {} });
             });
         });

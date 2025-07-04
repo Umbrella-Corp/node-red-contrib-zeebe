@@ -1,12 +1,12 @@
-# node-red-contrib-zeebe-2 (fork of node-red-contrib-zeebe, migrated to Camunda 8 SDK)
+# node-red-camunda8
 
 ![Compatible with: Camunda Platform 8.2+](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-0072Ce)
 
-![npm](https://img.shields.io/npm/v/node-red-contrib-zeebe-2)
+![npm](https://img.shields.io/npm/v/node-red-camunda8)
 
-This module leverages the official [Camunda 8 SDK](https://github.com/camunda/camunda-8-js-sdk) to bring Zeebe awesomeness to Node-RED!
+This module leverages the official [Camunda 8 SDK](https://github.com/camunda/camunda-8-js-sdk) to bring comprehensive Camunda 8 process automation capabilities to Node-RED!
 
-**This package has been migrated from the deprecated zeebe-node package to the official @camunda8/sdk package for better security and ongoing support.**
+**This package provides 19 nodes for complete Camunda 8 integration, built on the official @camunda8/sdk for security and ongoing support.**
 
 ## Security and Best Practices
 
@@ -78,7 +78,7 @@ To test these nodes locally in node-red, the `npm install <folder>` command can 
 In your node-red user directory, typically `~/.node-red`, run:
 
 ```bash
-npm install <path to location of node-red-contrib-zeebe>
+npm install <path to location of node-red-camunda8>
 ```
 
 This creates the appropriate symbolic link to the directory so that Node-RED will discover the node when it starts. Any changes to the node’s file can be picked up by simply restarting Node-RED.

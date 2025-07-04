@@ -1,7 +1,7 @@
 {
-  "name": "node-red-contrib-zeebe-2",
-  "version": "1.0.0",
-  "description": "Zeebe nodes for Node-RED ",
+  "name": "node-red-camunda8",
+  "version": "2.0.1",
+  "description": "Camunda 8 nodes for Node-RED",
   "main": "index.js",
   "scripts": {
     "test": "jest --testPathIgnorePatterns integration --forceExit --detectOpenHandles",
@@ -11,16 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dfulgham/node-red-contrib-zeebe.git"
+    "url": "git+https://github.com/Umbrella-Corp/node-red-camunda8.git"
   },
   "license": "MIT",
   "keywords": [
     "node-red",
-    "zeebe",
+    "camunda8",
     "camunda",
     "bpmn",
     "workflow",
-    "microservice"
+    "process-automation"
   ],
   "dependencies": {
     "@camunda8/sdk": "^8.7.17",
