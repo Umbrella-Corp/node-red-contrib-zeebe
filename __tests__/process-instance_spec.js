@@ -1,6 +1,6 @@
 const helper = require('node-red-node-test-helper');
 const deployNode = require('../src/nodes/process-instance.js');
-const zeebeNode = require('../src/nodes/zeebe');
+const camundaNode = require('../src/nodes/camunda');
 
 helper.init(require.resolve('node-red'));
 
@@ -19,15 +19,15 @@ describe('deploy node', () => {
         const flow = [
             {
                 id: 'n1',
-                type: 'zeebe',
-                name: 'zeebe',
+                type: 'camunda',
+                name: 'camunda',
                 contactPoint: 'localhost:1234',
             },
             {
                 id: 'n2',
                 type: 'process-instance',
                 name: 'process-instance',
-                zeebe: 'n1',
+                camunda: 'n1',
                 wires: [['n3']],
             },
             { id: 'n3', type: 'helper' },
@@ -35,7 +35,7 @@ describe('deploy node', () => {
 
         helper.settings({ userDir: '.' });
 
-        helper.load([zeebeNode, deployNode], flow, () => {
+        helper.load([camundaNode, deployNode], flow, () => {
             const n1 = helper.getNode('n1');
             const n2 = helper.getNode('n2');
             const n3 = helper.getNode('n3');

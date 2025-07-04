@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('zeebe', {
+    RED.nodes.registerType('camunda', {
         category: 'config',
         defaults: {
             name: { value: '' },
@@ -18,12 +18,12 @@
             clientSecret: { value: '', required: false },
         },
         label: function () {
-            return this.name || this.contactPoint || 'zeebe';
+            return this.name || this.contactPoint || 'camunda';
         },
     });
 </script>
 
-<script type="text/x-red" data-template-name="zeebe">
+<script type="text/x-red" data-template-name="camunda">
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-config-input-name" placeholder="Name">

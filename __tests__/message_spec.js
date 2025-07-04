@@ -1,6 +1,6 @@
 const helper = require('node-red-node-test-helper');
 const publishMessageNode = require('../src/nodes/message.js');
-const zeebeNode = require('../src/nodes/zeebe');
+const camundaNode = require('../src/nodes/camunda');
 
 helper.init(require.resolve('node-red'));
 
@@ -19,19 +19,19 @@ describe('message node', () => {
         const flow = [
             {
                 id: 'n1',
-                type: 'zeebe',
-                name: 'zeebe',
+                type: 'camunda',
+                name: 'camunda',
                 contactPoint: 'localhost:1234',
             },
             {
                 id: 'n2',
                 type: 'message',
                 name: 'message',
-                zeebe: 'n1',
+                camunda: 'n1',
             },
         ];
 
-        helper.load([zeebeNode, publishMessageNode], flow, () => {
+        helper.load([camundaNode, publishMessageNode], flow, () => {
             const n1 = helper.getNode('n1');
             const n2 = helper.getNode('n2');
 

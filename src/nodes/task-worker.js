@@ -7,9 +7,9 @@ module.exports = function (RED) {
         const node = this;
 
         // Validate configuration
-        if (!config.zeebe) {
-            node.error('Missing Zeebe configuration');
-            status.error(node, 'Missing Zeebe config');
+        if (!config.camunda) {
+            node.error('Missing Camunda configuration');
+            status.error(node, 'Missing Camunda config');
             return;
         }
 
@@ -19,14 +19,14 @@ module.exports = function (RED) {
             return;
         }
 
-        const zeebeConfig = RED.nodes.getNode(config.zeebe);
-        if (!zeebeConfig) {
-            node.error('Invalid Zeebe configuration reference');
-            status.error(node, 'Invalid Zeebe config');
+        const camundaConfig = RED.nodes.getNode(config.camunda);
+        if (!camundaConfig) {
+            node.error('Invalid Camunda configuration reference');
+            status.error(node, 'Invalid Camunda config');
             return;
         }
 
-        const zbc = zeebeConfig.zbc;
+        const zbc = camundaConfig.zbc;
         if (!zbc) {
             node.error('Zeebe client not available');
             status.error(node, 'No Zeebe client');
@@ -35,11 +35,11 @@ module.exports = function (RED) {
 
         // assume the worker is connected, once the client is connected. this will be obsolete,
         // once https://github.com/creditsenseau/zeebe-client-node-js/issues/97 is fixed
-        zeebeConfig.once('ready', () => {
+        camundaConfig.once('ready', () => {
             status.success(node, 'Connected');
         });
 
-        zeebeConfig.once('connectionError', () => {
+        camundaConfig.once('connectionError', () => {
             status.error(node, 'Connection Error');
         });
 
