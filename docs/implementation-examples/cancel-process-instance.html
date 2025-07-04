@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('cancel-process-instance', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'cancel process instance';
+        },
+        paletteLabel: 'cancel instance',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="cancel-process-instance">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="cancel-process-instance">
+    <p>Cancels a running process instance in Zeebe. When a Node-RED message is received at the input, the specified process instance is cancelled.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.processInstanceKey <span class="property-type">string</span></dt>
+        <dd>The key of the process instance to cancel.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added result information including cancellation confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to programmatically cancel running process instances. This is useful for:</p>
+    <ul>
+        <li>Error handling scenarios where processes need to be terminated</li>
+        <li>Timeout situations where processes have exceeded expected duration</li>
+        <li>Administrative cleanup of unwanted or stuck process instances</li>
+        <li>Integration with external monitoring systems that detect problems</li>
+    </ul>
+
+    <p>The process instance key can be obtained from:</p>
+    <ul>
+        <li>The output of the "process instance" node when creating instances</li>
+        <li>Query results from monitoring systems</li>
+        <li>External applications that track process instances</li>
+    </ul>
+
+    <h3>Error Handling</h3>
+    <p>If the process instance key is invalid or the instance cannot be cancelled, an error will be logged and the node status will show the error. Common errors include:</p>
+    <ul>
+        <li>Process instance not found (already completed or invalid key)</li>
+        <li>Connection issues with the Zeebe broker</li>
+        <li>Permission issues (if security is enabled)</li>
+    </ul>
+
+    <h3>References</h3>
+    <ul>
+        <li>Camunda 8 Docs: <a href="https://docs.camunda.io/docs/components/zeebe/process-lifecycles/">Process Lifecycles</a></li>
+        <li>Zeebe API: <a href="https://docs.camunda.io/docs/apis-tools/zeebe-api/">cancelProcessInstance</a></li>
+    </ul>
+</script>
