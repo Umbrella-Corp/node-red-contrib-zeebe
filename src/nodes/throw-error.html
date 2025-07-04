@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('throw-error', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#f44336',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'throw-error.png',
         label: function () {
             return this.name || 'throw error';
         },

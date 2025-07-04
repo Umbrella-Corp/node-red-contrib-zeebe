@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('broadcast-signal', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#9c27b0',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'broadcast-signal.png',
         label: function () {
             return this.name || 'broadcast signal';
         },

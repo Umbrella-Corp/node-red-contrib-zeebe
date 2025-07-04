@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('delete-resource', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#f44336',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'delete-resource.png',
         label: function () {
             return this.name || 'delete resource';
         },
