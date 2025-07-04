@@ -1,7 +1,7 @@
 const status = require('../util/nodeStatus');
 
 module.exports = function (RED) {
-    function CancelProcessInstance(config) {
+    function ThrowError(config) {
         RED.nodes.createNode(this, config);
         const node = this;
 
@@ -13,9 +13,21 @@ module.exports = function (RED) {
                 return;
             }
 
-            if (!msg.payload.processInstanceKey) {
-                node.error('Missing processInstanceKey in payload', msg);
-                status.error(node, 'Missing processInstanceKey');
+            if (!msg.payload.jobKey) {
+                node.error('Missing jobKey in payload', msg);
+                status.error(node, 'Missing jobKey');
+                return;
+            }
+
+            if (!msg.payload.errorCode) {
+                node.error('Missing errorCode in payload', msg);
+                status.error(node, 'Missing errorCode');
+                return;
+            }
+
+            if (!msg.payload.errorMessage) {
+                node.error('Missing errorMessage in payload', msg);
+                status.error(node, 'Missing errorMessage');
                 return;
             }
 
@@ -30,20 +42,23 @@ module.exports = function (RED) {
             this.zbc = camundaConfig.zbc;
 
             try {
-                const result = await this.zbc.cancelProcessInstance(
-                    msg.payload.processInstanceKey,
-                );
+                const result = await this.zbc.throwError({
+                    jobKey: msg.payload.jobKey,
+                    errorCode: msg.payload.errorCode,
+                    errorMessage: msg.payload.errorMessage,
+                    variables: msg.payload.variables || {},
+                });
 
                 // Add result to the existing message payload
                 msg.payload = {
                     ...msg.payload,
                     result: result,
-                    cancelled: true,
+                    errorThrown: true,
                     timestamp: new Date().toISOString(),
                 };
 
                 node.send(msg);
-                status.success(node, `Cancelled: ${msg.payload.processInstanceKey}`);
+                status.success(node, `Error thrown: ${msg.payload.errorCode}`);
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
@@ -52,5 +67,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('cancel-process-instance', CancelProcessInstance);
+    RED.nodes.registerType('throw-error', ThrowError);
 };

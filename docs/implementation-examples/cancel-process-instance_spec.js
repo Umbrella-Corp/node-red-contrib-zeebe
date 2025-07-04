@@ -42,7 +42,7 @@ describe('cancel-process-instance node', () => {
 
             // Mock the cancelProcessInstance method
             n1.zbc = {
-                cancelProcessInstance: jest.fn().mockResolvedValue({ cancelled: true })
+                cancelProcessInstance: jest.fn().mockResolvedValue({ cancelled: true }),
             };
 
             n3.on('input', (msg) => {
@@ -118,7 +118,7 @@ describe('cancel-process-instance node', () => {
 
             // Mock the cancelProcessInstance method to throw an error
             n1.zbc = {
-                cancelProcessInstance: jest.fn().mockRejectedValue(new Error('Process instance not found'))
+                cancelProcessInstance: jest.fn().mockRejectedValue(new Error('Process instance not found')),
             };
 
             n2.on('call:error', (err) => {

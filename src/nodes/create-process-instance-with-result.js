@@ -1,7 +1,7 @@
 const status = require('../util/nodeStatus');
 
 module.exports = function (RED) {
-    function CancelProcessInstance(config) {
+    function CreateProcessInstanceWithResult(config) {
         RED.nodes.createNode(this, config);
         const node = this;
 
@@ -13,9 +13,9 @@ module.exports = function (RED) {
                 return;
             }
 
-            if (!msg.payload.processInstanceKey) {
-                node.error('Missing processInstanceKey in payload', msg);
-                status.error(node, 'Missing processInstanceKey');
+            if (!msg.payload.processId) {
+                node.error('Missing processId in payload', msg);
+                status.error(node, 'Missing processId');
                 return;
             }
 
@@ -28,22 +28,26 @@ module.exports = function (RED) {
             }
 
             this.zbc = camundaConfig.zbc;
+            const variables = msg.payload.variables || {};
+            const timeout = msg.payload.timeout || 30000; // Default 30 seconds
 
             try {
-                const result = await this.zbc.cancelProcessInstance(
-                    msg.payload.processInstanceKey,
-                );
+                const result = await this.zbc.createProcessInstanceWithResult({
+                    bpmnProcessId: msg.payload.processId,
+                    variables: variables,
+                    requestTimeout: timeout,
+                });
 
                 // Add result to the existing message payload
                 msg.payload = {
                     ...msg.payload,
                     result: result,
-                    cancelled: true,
+                    processCompleted: true,
                     timestamp: new Date().toISOString(),
                 };
 
                 node.send(msg);
-                status.success(node, `Cancelled: ${msg.payload.processInstanceKey}`);
+                status.success(node, `Process completed: ${msg.payload.processId}`);
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
@@ -52,5 +56,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('cancel-process-instance', CancelProcessInstance);
+    RED.nodes.registerType('create-process-instance-with-result', CreateProcessInstanceWithResult);
 };

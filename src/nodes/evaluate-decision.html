@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    RED.nodes.registerType('evaluate-decision', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'evaluate decision';
+        },
+        paletteLabel: 'evaluate decision',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="evaluate-decision">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="evaluate-decision">
+    <p>Evaluates DMN decision tables and returns results. This enables business rule evaluation outside of process context.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.decisionId <span class="property-type">string</span></dt>
+        <dd>The ID of the deployed DMN decision to evaluate.</dd>
+        
+        <dt>payload.variables <span class="property-type">object</span></dt>
+        <dd>JSON object containing input variables for the decision evaluation.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added decision evaluation results.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to evaluate DMN business rules independently. This is useful for:</p>
+    <ul>
+        <li>Real-time decision making</li>
+        <li>Business rule validation</li>
+        <li>Decision-as-a-service patterns</li>
+        <li>Rule externalization and centralization</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To evaluate a decision, send a message with the following payload:</p>
+    <pre>
+{
+    "decisionId": "loan_approval",
+    "variables": {
+        "creditScore": 750,
+        "loanAmount": 50000,
+        "income": 80000
+    }
+}
+    </pre>
+
+    <p>The decision result will be added to the payload and forwarded to the output.</p>
+</script>

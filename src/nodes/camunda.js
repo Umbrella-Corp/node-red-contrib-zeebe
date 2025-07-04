@@ -63,7 +63,7 @@ module.exports = function (RED) {
                 node.zbc.stdout = clientOptions.stdout;
             }
             if (clientOptions.longPoll) {
-                node.zbc.longPoll = clientOptions.longPoll
+                node.zbc.longPoll = clientOptions.longPoll;
             }
         } catch (err) {
             node.error('Failed to create Camunda client: ' + err.message);

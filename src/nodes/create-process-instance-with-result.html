@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('create-process-instance-with-result', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'create instance with result';
+        },
+        paletteLabel: 'instance with result',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="create-process-instance-with-result">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="create-process-instance-with-result">
+    <p>Creates a process instance and waits for its completion, returning the final result. This enables synchronous process execution patterns.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.processId <span class="property-type">string</span></dt>
+        <dd>ID of an existing BPMN process to execute.</dd>
+        
+        <dt class="optional">payload.variables <span class="property-type">object</span></dt>
+        <dd>Instance variables as a JSON object.</dd>
+        
+        <dt class="optional">payload.timeout <span class="property-type">number</span></dt>
+        <dd>Timeout in milliseconds to wait for process completion. Default is 30000 (30 seconds).</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added process completion results including final variables.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides synchronous process execution capabilities. This is useful for:</p>
+    <ul>
+        <li>Request-response patterns</li>
+        <li>API integration scenarios</li>
+        <li>Short-running validation processes</li>
+        <li>Immediate result requirements</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To create and wait for a process instance result, send a message with the following payload:</p>
+    <pre>
+{
+    "processId": "validation_process",
+    "variables": {
+        "documentId": "doc123",
+        "userId": "user456"
+    },
+    "timeout": 30000
+}
+    </pre>
+
+    <p>The node will wait for the process to complete and return the final variables in the result.</p>
+</script>

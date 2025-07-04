@@ -43,7 +43,19 @@
       "complete-task": "src/nodes/complete-task.js",
       "message": "src/nodes/message.js",
       "start-message": "src/nodes/start-message.js",
-      "deploy": "src/nodes/deploy.js"
+      "deploy": "src/nodes/deploy.js",
+      "cancel-process-instance": "src/nodes/cancel-process-instance.js",
+      "set-variables": "src/nodes/set-variables.js",
+      "broadcast-signal": "src/nodes/broadcast-signal.js",
+      "evaluate-decision": "src/nodes/evaluate-decision.js",
+      "create-process-instance-with-result": "src/nodes/create-process-instance-with-result.js",
+      "throw-error": "src/nodes/throw-error.js",
+      "operate-query": "src/nodes/operate-query.js",
+      "resolve-incident": "src/nodes/resolve-incident.js",
+      "topology": "src/nodes/topology.js",
+      "delete-resource": "src/nodes/delete-resource.js",
+      "tasklist-query": "src/nodes/tasklist-query.js",
+      "modify-process-instance": "src/nodes/modify-process-instance.js"
     }
   },
   "jest": {

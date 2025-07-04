@@ -1,0 +1,87 @@
+<script type="text/javascript">
+    RED.nodes.registerType('delete-resource', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'delete resource';
+        },
+        paletteLabel: 'delete resource',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="delete-resource">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="delete-resource">
+    <p>Deletes deployed process definitions and decision tables from Zeebe. This enables resource lifecycle management and cleanup of obsolete versions.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.resourceKey <span class="property-type">string</span></dt>
+        <dd>The key of the resource (process definition or decision table) to delete.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added resource deletion confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to delete deployed resources. This is useful for:</p>
+    <ul>
+        <li>Resource lifecycle management</li>
+        <li>Cleanup of obsolete process versions</li>
+        <li>Deployment pipeline automation</li>
+        <li>Version management and rollback scenarios</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To delete a resource, send a message with the following payload:</p>
+    <pre>
+{
+    "resourceKey": "12345678901234567"
+}
+    </pre>
+
+    <p>The resource will be deleted and confirmation will be added to the payload.</p>
+
+    <h3>Important Notes</h3>
+    <div class="form-tips">
+        <p><strong>Warning:</strong> Resource deletion is permanent and cannot be undone. Ensure the resource is not currently in use by active process instances.</p>
+    </div>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li>Resource must exist in the Zeebe cluster</li>
+        <li>Resource should not be actively used by running process instances</li>
+        <li>Appropriate permissions for resource management</li>
+    </ul>
+
+    <h3>Resource Types</h3>
+    <p>This node can delete:</p>
+    <ul>
+        <li>BPMN process definitions</li>
+        <li>DMN decision tables</li>
+        <li>Other deployed resources</li>
+    </ul>
+</script>

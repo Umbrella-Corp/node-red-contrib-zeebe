@@ -1,7 +1,7 @@
 const status = require('../util/nodeStatus');
 
 module.exports = function (RED) {
-    function CancelProcessInstance(config) {
+    function EvaluateDecision(config) {
         RED.nodes.createNode(this, config);
         const node = this;
 
@@ -13,9 +13,15 @@ module.exports = function (RED) {
                 return;
             }
 
-            if (!msg.payload.processInstanceKey) {
-                node.error('Missing processInstanceKey in payload', msg);
-                status.error(node, 'Missing processInstanceKey');
+            if (!msg.payload.decisionId) {
+                node.error('Missing decisionId in payload', msg);
+                status.error(node, 'Missing decisionId');
+                return;
+            }
+
+            if (!msg.payload.variables) {
+                node.error('Missing variables in payload', msg);
+                status.error(node, 'Missing variables');
                 return;
             }
 
@@ -30,20 +36,21 @@ module.exports = function (RED) {
             this.zbc = camundaConfig.zbc;
 
             try {
-                const result = await this.zbc.cancelProcessInstance(
-                    msg.payload.processInstanceKey,
-                );
+                const result = await this.zbc.evaluateDecision({
+                    decisionId: msg.payload.decisionId,
+                    variables: msg.payload.variables,
+                });
 
                 // Add result to the existing message payload
                 msg.payload = {
                     ...msg.payload,
                     result: result,
-                    cancelled: true,
+                    decisionEvaluated: true,
                     timestamp: new Date().toISOString(),
                 };
 
                 node.send(msg);
-                status.success(node, `Cancelled: ${msg.payload.processInstanceKey}`);
+                status.success(node, `Decision evaluated: ${msg.payload.decisionId}`);
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
@@ -52,5 +59,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('cancel-process-instance', CancelProcessInstance);
+    RED.nodes.registerType('evaluate-decision', EvaluateDecision);
 };

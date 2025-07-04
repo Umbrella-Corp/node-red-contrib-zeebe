@@ -1,7 +1,7 @@
 const status = require('../util/nodeStatus');
 
 module.exports = function (RED) {
-    function CancelProcessInstance(config) {
+    function ModifyProcessInstance(config) {
         RED.nodes.createNode(this, config);
         const node = this;
 
@@ -19,6 +19,12 @@ module.exports = function (RED) {
                 return;
             }
 
+            if (!msg.payload.modifications) {
+                node.error('Missing modifications in payload', msg);
+                status.error(node, 'Missing modifications');
+                return;
+            }
+
             // Validate camunda connection
             const camundaConfig = RED.nodes.getNode(config.camunda);
             if (!camundaConfig || !camundaConfig.zbc) {
@@ -30,20 +36,22 @@ module.exports = function (RED) {
             this.zbc = camundaConfig.zbc;
 
             try {
-                const result = await this.zbc.cancelProcessInstance(
-                    msg.payload.processInstanceKey,
-                );
+                const result = await this.zbc.modifyProcessInstance({
+                    processInstanceKey: msg.payload.processInstanceKey,
+                    activateInstructions: msg.payload.modifications.activateInstructions || [],
+                    terminateInstructions: msg.payload.modifications.terminateInstructions || [],
+                });
 
                 // Add result to the existing message payload
                 msg.payload = {
                     ...msg.payload,
                     result: result,
-                    cancelled: true,
+                    processInstanceModified: true,
                     timestamp: new Date().toISOString(),
                 };
 
                 node.send(msg);
-                status.success(node, `Cancelled: ${msg.payload.processInstanceKey}`);
+                status.success(node, `Process instance modified: ${msg.payload.processInstanceKey}`);
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
@@ -52,5 +60,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('cancel-process-instance', CancelProcessInstance);
+    RED.nodes.registerType('modify-process-instance', ModifyProcessInstance);
 };

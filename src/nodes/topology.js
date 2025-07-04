@@ -1,24 +1,11 @@
 const status = require('../util/nodeStatus');
 
 module.exports = function (RED) {
-    function CancelProcessInstance(config) {
+    function Topology(config) {
         RED.nodes.createNode(this, config);
         const node = this;
 
         node.on('input', async function (msg) {
-            // Input validation
-            if (!msg.payload) {
-                node.error('Missing payload in message', msg);
-                status.error(node, 'Missing payload');
-                return;
-            }
-
-            if (!msg.payload.processInstanceKey) {
-                node.error('Missing processInstanceKey in payload', msg);
-                status.error(node, 'Missing processInstanceKey');
-                return;
-            }
-
             // Validate camunda connection
             const camundaConfig = RED.nodes.getNode(config.camunda);
             if (!camundaConfig || !camundaConfig.zbc) {
@@ -30,20 +17,17 @@ module.exports = function (RED) {
             this.zbc = camundaConfig.zbc;
 
             try {
-                const result = await this.zbc.cancelProcessInstance(
-                    msg.payload.processInstanceKey,
-                );
+                const result = await this.zbc.topology();
 
-                // Add result to the existing message payload
+                // Create or update payload with topology information
                 msg.payload = {
                     ...msg.payload,
-                    result: result,
-                    cancelled: true,
+                    topology: result,
                     timestamp: new Date().toISOString(),
                 };
 
                 node.send(msg);
-                status.success(node, `Cancelled: ${msg.payload.processInstanceKey}`);
+                status.success(node, `Topology: ${result.brokers ? result.brokers.length : 0} brokers`);
             } catch (err) {
                 node.error(err.message, msg);
                 status.error(node, err.message);
@@ -52,5 +36,5 @@ module.exports = function (RED) {
         });
     }
 
-    RED.nodes.registerType('cancel-process-instance', CancelProcessInstance);
+    RED.nodes.registerType('topology', Topology);
 };

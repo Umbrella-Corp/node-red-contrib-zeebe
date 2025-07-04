@@ -1,0 +1,113 @@
+<script type="text/javascript">
+    RED.nodes.registerType('modify-process-instance', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'modify process instance';
+        },
+        paletteLabel: 'modify instance',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="modify-process-instance">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="modify-process-instance">
+    <p>Modifies running process instances by activating or terminating specific elements. This provides advanced process control capabilities for administrative scenarios.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.processInstanceKey <span class="property-type">string</span></dt>
+        <dd>The key of the process instance to modify.</dd>
+        
+        <dt>payload.modifications <span class="property-type">object</span></dt>
+        <dd>Object containing modification instructions.</dd>
+        
+        <dt>payload.modifications.activateInstructions <span class="property-type">array</span></dt>
+        <dd>Array of activation instructions for elements to activate.</dd>
+        
+        <dt>payload.modifications.terminateInstructions <span class="property-type">array</span></dt>
+        <dd>Array of termination instructions for elements to terminate.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added process instance modification confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides advanced process instance control capabilities. This is useful for:</p>
+    <ul>
+        <li>Process migration scenarios</li>
+        <li>Administrative process corrections</li>
+        <li>Emergency process interventions</li>
+        <li>Advanced process control patterns</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To modify a process instance, send a message with the following payload:</p>
+    <pre>
+{
+    "processInstanceKey": "12345678901234567",
+    "modifications": {
+        "activateInstructions": [
+            {
+                "elementId": "Task_ReviewDocument",
+                "variables": {
+                    "priority": "high"
+                }
+            }
+        ],
+        "terminateInstructions": [
+            {
+                "elementInstanceKey": "98765432109876543"
+            }
+        ]
+    }
+}
+    </pre>
+
+    <h3>Modification Instructions</h3>
+    <p><strong>Activate Instructions:</strong> Activate specific elements in the process</p>
+    <ul>
+        <li><code>elementId</code> - ID of the element to activate</li>
+        <li><code>variables</code> - Optional variables to set when activating</li>
+    </ul>
+    
+    <p><strong>Terminate Instructions:</strong> Terminate specific element instances</p>
+    <ul>
+        <li><code>elementInstanceKey</code> - Key of the element instance to terminate</li>
+    </ul>
+
+    <h3>Important Notes</h3>
+    <div class="form-tips">
+        <p><strong>Warning:</strong> Process instance modification is a powerful operation that should be used carefully. It can lead to unexpected process behavior if not used correctly.</p>
+    </div>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li>Deep understanding of BPMN process structure</li>
+        <li>Knowledge of element IDs and instance keys</li>
+        <li>Appropriate permissions for process management</li>
+    </ul>
+</script>

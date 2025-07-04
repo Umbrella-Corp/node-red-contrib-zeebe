@@ -1,0 +1,74 @@
+<script type="text/javascript">
+    RED.nodes.registerType('broadcast-signal', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'broadcast signal';
+        },
+        paletteLabel: 'broadcast signal',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="broadcast-signal">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="broadcast-signal">
+    <p>Broadcasts signals to all eligible process instances in Zeebe. This enables event-driven architecture patterns and cross-process communication.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.signalName <span class="property-type">string</span></dt>
+        <dd>The name of the signal to broadcast.</dd>
+        
+        <dt class="optional">payload.variables <span class="property-type">object</span></dt>
+        <dd>Optional. JSON object containing variables to send with the signal.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added result information including signal broadcast confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to broadcast signals to multiple process instances. This is useful for:</p>
+    <ul>
+        <li>Event-driven architecture patterns</li>
+        <li>Bulk notifications and updates</li>
+        <li>Cross-process communication</li>
+        <li>System-wide event propagation</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To broadcast a signal, send a message with the following payload:</p>
+    <pre>
+{
+    "signalName": "market_update",
+    "variables": {
+        "marketPrice": 100.50,
+        "timestamp": "2024-01-15T10:30:00Z"
+    }
+}
+    </pre>
+
+    <p>The signal will be sent to all process instances that have signal catch events with the matching signal name.</p>
+</script>
