@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('set-variables', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'set variables';
+        },
+        paletteLabel: 'set variables',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="set-variables">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="set-variables">
+    <p>Updates process variables on running process instances in Zeebe. This enables dynamic variable updates without requiring message correlation.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.processInstanceKey <span class="property-type">string</span></dt>
+        <dd>The key of the process instance to update.</dd>
+        
+        <dt>payload.variables <span class="property-type">object</span></dt>
+        <dd>JSON object containing the variables to set or update.</dd>
+        
+        <dt class="optional">payload.local <span class="property-type">boolean</span></dt>
+        <dd>Optional. If true, variables are set at local scope. Default is false (global scope).</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added result information including variable update confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to update process variables on running instances. This is useful for:</p>
+    <ul>
+        <li>Administrative updates and data corrections</li>
+        <li>External data integration scenarios</li>
+        <li>Dynamic configuration changes</li>
+        <li>Process state synchronization</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To set variables on a process instance, send a message with the following payload:</p>
+    <pre>
+{
+    "processInstanceKey": "12345678901234567",
+    "variables": {
+        "customerStatus": "premium",
+        "discountRate": 0.15
+    },
+    "local": false
+}
+    </pre>
+
+    <p>The node will update the variables and forward the confirmation to the output.</p>
+</script>

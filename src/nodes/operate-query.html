@@ -1,0 +1,82 @@
+<script type="text/javascript">
+    RED.nodes.registerType('operate-query', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'operate query';
+        },
+        paletteLabel: 'operate query',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="operate-query">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="operate-query">
+    <p>Queries process instances using the Operate API for monitoring and reporting. This enables process monitoring dashboards and operational insights.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">payload.processDefinitionKey <span class="property-type">string</span></dt>
+        <dd>Filter by specific process definition key.</dd>
+        
+        <dt class="optional">payload.state <span class="property-type">string</span></dt>
+        <dd>Filter by process instance state (e.g., "ACTIVE", "COMPLETED", "TERMINATED").</dd>
+        
+        <dt class="optional">payload.startDate <span class="property-type">string</span></dt>
+        <dd>Filter by start date (ISO 8601 format).</dd>
+        
+        <dt class="optional">payload.endDate <span class="property-type">string</span></dt>
+        <dd>Filter by end date (ISO 8601 format).</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added query results containing array of process instance data.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to query process instances for monitoring purposes. This is useful for:</p>
+    <ul>
+        <li>Process monitoring dashboards</li>
+        <li>Operational reporting and analytics</li>
+        <li>Process instance tracking</li>
+        <li>Performance monitoring</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To query process instances, send a message with the following payload:</p>
+    <pre>
+{
+    "processDefinitionKey": "order_process",
+    "state": "ACTIVE",
+    "startDate": "2024-01-01T00:00:00Z",
+    "endDate": "2024-01-31T23:59:59Z"
+}
+    </pre>
+
+    <p>The query results will be added to the payload and forwarded to the output.</p>
+
+    <h3>Prerequisites</h3>
+    <p><strong>Note:</strong> This node requires Operate API access to be configured in the Camunda connection.</p>
+</script>

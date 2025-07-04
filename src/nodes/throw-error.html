@@ -1,0 +1,84 @@
+<script type="text/javascript">
+    RED.nodes.registerType('throw-error', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'throw error';
+        },
+        paletteLabel: 'throw error',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="throw-error">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="throw-error">
+    <p>Throws business errors that can be caught by error boundary events in BPMN processes. This enables external systems to trigger error handling in processes.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload.jobKey <span class="property-type">string</span></dt>
+        <dd>The key of the job context where the error should be thrown.</dd>
+        
+        <dt>payload.errorCode <span class="property-type">string</span></dt>
+        <dd>Error code that can be matched by error boundary events in BPMN.</dd>
+        
+        <dt>payload.errorMessage <span class="property-type">string</span></dt>
+        <dd>Human-readable error message for debugging and logging.</dd>
+        
+        <dt class="optional">payload.variables <span class="property-type">object</span></dt>
+        <dd>Optional. Additional variables to pass with the error.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added error throwing confirmation.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to throw business errors from external systems. This is useful for:</p>
+    <ul>
+        <li>Integration error scenarios</li>
+        <li>Business exception handling</li>
+        <li>External validation failures</li>
+        <li>Triggering error boundary events</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To throw an error, send a message with the following payload:</p>
+    <pre>
+{
+    "jobKey": "12345678901234567",
+    "errorCode": "VALIDATION_ERROR",
+    "errorMessage": "Document validation failed",
+    "variables": {
+        "errorDetails": "Missing required field: customer_id"
+    }
+}
+    </pre>
+
+    <p>The error will be thrown in the context of the specified job and can be caught by error boundary events.</p>
+
+    <h3>Prerequisites</h3>
+    <p><strong>Note:</strong> This node must be used with a job context obtained from a task-worker node. The jobKey is typically available in the message payload when processing tasks.</p>
+</script>

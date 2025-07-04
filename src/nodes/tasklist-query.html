@@ -1,0 +1,105 @@
+<script type="text/javascript">
+    RED.nodes.registerType('tasklist-query', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'tasklist query';
+        },
+        paletteLabel: 'tasklist query',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="tasklist-query">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="tasklist-query">
+    <p>Queries human tasks using the Tasklist API. This enables task management integration, custom task interfaces, and task analytics.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">payload.assignee <span class="property-type">string</span></dt>
+        <dd>Filter by task assignee (user ID).</dd>
+        
+        <dt class="optional">payload.state <span class="property-type">string</span></dt>
+        <dd>Filter by task state (e.g., "CREATED", "COMPLETED", "CANCELED").</dd>
+        
+        <dt class="optional">payload.processDefinitionKey <span class="property-type">string</span></dt>
+        <dd>Filter by process definition key.</dd>
+        
+        <dt class="optional">payload.taskDefinitionId <span class="property-type">string</span></dt>
+        <dd>Filter by task definition ID from the BPMN model.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Original payload with added query results containing array of task data.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides the ability to query human tasks for management purposes. This is useful for:</p>
+    <ul>
+        <li>Custom task management interfaces</li>
+        <li>Task analytics and reporting</li>
+        <li>User workload monitoring</li>
+        <li>Task performance analysis</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>To query tasks, send a message with the following payload:</p>
+    <pre>
+{
+    "assignee": "john.doe",
+    "state": "CREATED",
+    "processDefinitionKey": "approval_process"
+}
+    </pre>
+
+    <p>The query results will include task information such as:</p>
+    <pre>
+{
+    "result": {
+        "items": [
+            {
+                "id": "task123",
+                "name": "Review Document",
+                "assignee": "john.doe",
+                "state": "CREATED",
+                "processInstanceKey": "proc456",
+                "creationTime": "2024-01-15T10:30:00Z"
+            }
+        ]
+    }
+}
+    </pre>
+
+    <h3>Prerequisites</h3>
+    <p><strong>Note:</strong> This node requires Tasklist API access to be configured in the Camunda connection.</p>
+
+    <h3>Task States</h3>
+    <p>Common task states include:</p>
+    <ul>
+        <li><strong>CREATED</strong> - Task is created and waiting for assignment</li>
+        <li><strong>COMPLETED</strong> - Task has been completed</li>
+        <li><strong>CANCELED</strong> - Task has been canceled</li>
+    </ul>
+</script>

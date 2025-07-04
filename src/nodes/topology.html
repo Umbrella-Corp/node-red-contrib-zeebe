@@ -1,0 +1,92 @@
+<script type="text/javascript">
+    RED.nodes.registerType('topology', {
+        category: 'camunda',
+        color: '#C0DEED',
+        defaults: {
+            name: { value: '' },
+            camunda: { required: true, type: 'camunda' },
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'camunda.png',
+        label: function () {
+            return this.name || 'topology';
+        },
+        paletteLabel: 'topology',
+    });
+</script>
+
+<script type="text/x-red" data-template-name="topology">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-camunda"><i class="fa fa-server"></i> Camunda Broker</label>
+        <input type="text" id="node-input-camunda" placeholder="Camunda Broker" />
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="topology">
+    <p>Retrieves Zeebe cluster topology information including broker details, partition distribution, and cluster health status.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>Any input <span class="property-type">any</span></dt>
+        <dd>This node is triggered by any input message and doesn't require specific payload data.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload.topology <span class="property-type">object</span></dt>
+                <dd>Cluster topology information including brokers, partitions, and cluster status.</dd>
+            </dl>
+        </li>
+    </ol>
+
+    <h3>Details</h3>
+    <p>This node provides cluster topology and health information. This is useful for:</p>
+    <ul>
+        <li>Health monitoring dashboards</li>
+        <li>Cluster diagnostics and troubleshooting</li>
+        <li>Operational visibility and alerts</li>
+        <li>DevOps monitoring scenarios</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <p>Simply trigger this node with any input (e.g., using an inject node) to retrieve topology information:</p>
+    <pre>
+// Input can be empty or contain any data
+{}
+    </pre>
+
+    <p>The output will include topology data such as:</p>
+    <pre>
+{
+    "topology": {
+        "brokers": [
+            {
+                "nodeId": 0,
+                "host": "zeebe-0",
+                "port": 26501,
+                "partitions": [...]
+            }
+        ],
+        "clusterSize": 3,
+        "partitionsCount": 3,
+        "replicationFactor": 3
+    }
+}
+    </pre>
+
+    <h3>Monitoring Use Cases</h3>
+    <p>Use this node to monitor:</p>
+    <ul>
+        <li>Broker availability and health</li>
+        <li>Partition distribution and leadership</li>
+        <li>Cluster configuration verification</li>
+        <li>Network connectivity to brokers</li>
+    </ul>
+</script>
