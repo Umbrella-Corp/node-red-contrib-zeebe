@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('deploy', {
-        category: 'camunda',,
-        color: '#C0DEED',
+        category: 'camunda',
+        color: '#607d8b',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',,
+        icon: 'deploy.svg',
         label: function () {
             return this.name || 'deploy';
         },

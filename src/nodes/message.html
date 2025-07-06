@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('message', {
-        category: 'camunda',,
-        color: '#C0DEED',
+        category: 'camunda',
+        color: '#9c27b0',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 0,
-        icon: 'camunda.png',,
+        icon: 'message.svg',
         label: function () {
             return this.name || 'message';
         },

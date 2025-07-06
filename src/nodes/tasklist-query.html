@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('tasklist-query', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#00bcd4',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'tasklist-query.svg',
         label: function () {
             return this.name || 'tasklist query';
         },

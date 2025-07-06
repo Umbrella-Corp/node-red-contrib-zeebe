@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('modify-process-instance', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#795548',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'modify-process-instance.svg',
         label: function () {
             return this.name || 'modify process instance';
         },

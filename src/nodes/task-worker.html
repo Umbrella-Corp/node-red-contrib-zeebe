@@ -4,7 +4,7 @@
     }
     RED.nodes.registerType('task-worker', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#ff9800',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
@@ -14,7 +14,7 @@
         },
         inputs: 0,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'task-worker.svg',
         label: function () {
             return this.name || 'task worker';
         },

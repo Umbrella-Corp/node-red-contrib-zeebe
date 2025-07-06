@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('resolve-incident', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#ff9800',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'resolve-incident.svg',
         label: function () {
             return this.name || 'resolve incident';
         },

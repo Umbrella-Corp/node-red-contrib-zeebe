@@ -1,14 +1,14 @@
 <script type="text/javascript">
     RED.nodes.registerType('cancel-process-instance', {
         category: 'camunda',
-        color: '#C0DEED',
+        color: '#f44336',
         defaults: {
             name: { value: '' },
             camunda: { required: true, type: 'camunda' },
         },
         inputs: 1,
         outputs: 1,
-        icon: 'camunda.png',
+        icon: 'cancel-process-instance.svg',
         label: function () {
             return this.name || 'cancel process instance';
         },
