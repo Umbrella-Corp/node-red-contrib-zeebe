@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node-RED Camunda 8 Node Icon Preview</title>
+    <style>
+        body {
+            font-family: "IBM Plex Sans", Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px 0;
+        }
+        .palette {
+            background: #fff;
+            border-radius: 10px;
+            width: 320px;
+            margin: 0 auto;
+            padding: 24px 0 24px 0;
+            border: 1px solid #ddd;
+        }
+        .palette-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 18px;
+            margin-left: 18px;
+            letter-spacing: 0.01em;
+        }
+        .node-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .node-row {
+            display: flex;
+            align-items: center;
+            border-radius: 6px;
+            min-height: 32px;
+            height: 32px;
+            margin: 0 12px;
+            margin-bottom: 2px;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: outline 0.15s;
+            outline: 1px solid transparent;
+        }
+        .node-row:focus, .node-row:hover {
+            outline: 1.5px solid #888;
+        }
+        .node-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 6px;
+            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .node-icon img {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+        .node-label {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 500;
+            color: #222;
+            text-align: left;
+            letter-spacing: 0.01em;
+            padding-left: 2px;
+            user-select: none;
+        }
+        /* Node background colors from actual definitions */
+        .bg-camunda { background: #e0e0e0; }
+        .bg-process-instance { background: #34a853; }
+        .bg-task-worker { background: #ff9800; }
+        .bg-complete-task { background: #ff9800; }
+        .bg-message { background: #9c27b0; }
+        .bg-start-message { background: #9c27b0; }
+        .bg-deploy { background: #607d8b; }
+        .bg-cancel-process-instance { background: #f44336; }
+        .bg-set-variables { background: #34a853; }
+        .bg-broadcast-signal { background: #9c27b0; }
+        .bg-evaluate-decision { background: #00bcd4; }
+        .bg-create-process-instance-with-result { background: #34a853; }
+        .bg-throw-error { background: #f44336; }
+        .bg-operate-query { background: #00bcd4; }
+        .bg-resolve-incident { background: #ff9800; }
+        .bg-topology { background: #00bcd4; }
+        .bg-delete-resource { background: #f44336; }
+        .bg-tasklist-query { background: #00bcd4; }
+        .bg-modify-process-instance { background: #795548; }
+    </style>
+</head>
+<body>
+    <div class="palette">
+        <div class="palette-title">Nodes</div>
+        <div class="node-list">
+            <div class="node-row bg-camunda">
+                <div class="node-icon"><img src="src/nodes/icons/camunda.svg" alt="camunda"></div>
+                <div class="node-label">camunda</div>
+            </div>
+            <div class="node-row bg-process-instance">
+                <div class="node-icon"><img src="src/nodes/icons/process-instance.svg" alt="process-instance"></div>
+                <div class="node-label">process-instance</div>
+            </div>
+            <div class="node-row bg-task-worker">
+                <div class="node-icon"><img src="src/nodes/icons/task-worker.svg" alt="task-worker"></div>
+                <div class="node-label">task-worker</div>
+            </div>
+            <div class="node-row bg-complete-task">
+                <div class="node-icon"><img src="src/nodes/icons/complete-task.svg" alt="complete-task"></div>
+                <div class="node-label">complete-task</div>
+            </div>
+            <div class="node-row bg-message">
+                <div class="node-icon"><img src="src/nodes/icons/message.svg" alt="message"></div>
+                <div class="node-label">message</div>
+            </div>
+            <div class="node-row bg-start-message">
+                <div class="node-icon"><img src="src/nodes/icons/start-message.svg" alt="start-message"></div>
+                <div class="node-label">start-message</div>
+            </div>
+            <div class="node-row bg-deploy">
+                <div class="node-icon"><img src="src/nodes/icons/deploy.svg" alt="deploy"></div>
+                <div class="node-label">deploy</div>
+            </div>
+            <div class="node-row bg-cancel-process-instance">
+                <div class="node-icon"><img src="src/nodes/icons/cancel-process-instance.svg" alt="cancel-process-instance"></div>
+                <div class="node-label">cancel-process-instance</div>
+            </div>
+            <div class="node-row bg-set-variables">
+                <div class="node-icon"><img src="src/nodes/icons/set-variables.svg" alt="set-variables"></div>
+                <div class="node-label">set-variables</div>
+            </div>
+            <div class="node-row bg-broadcast-signal">
+                <div class="node-icon"><img src="src/nodes/icons/broadcast-signal.svg" alt="broadcast-signal"></div>
+                <div class="node-label">broadcast-signal</div>
+            </div>
+            <div class="node-row bg-evaluate-decision">
+                <div class="node-icon"><img src="src/nodes/icons/evaluate-decision.svg" alt="evaluate-decision"></div>
+                <div class="node-label">evaluate-decision</div>
+            </div>
+            <div class="node-row bg-create-process-instance-with-result">
+                <div class="node-icon"><img src="src/nodes/icons/create-process-instance-with-result.svg" alt="create-process-instance-with-result"></div>
+                <div class="node-label">create-process-instance-with-result</div>
+            </div>
+            <div class="node-row bg-throw-error">
+                <div class="node-icon"><img src="src/nodes/icons/throw-error.svg" alt="throw-error"></div>
+                <div class="node-label">throw-error</div>
+            </div>
+            <div class="node-row bg-operate-query">
+                <div class="node-icon"><img src="src/nodes/icons/operate-query.svg" alt="operate-query"></div>
+                <div class="node-label">operate-query</div>
+            </div>
+            <div class="node-row bg-resolve-incident">
+                <div class="node-icon"><img src="src/nodes/icons/resolve-incident.svg" alt="resolve-incident"></div>
+                <div class="node-label">resolve-incident</div>
+            </div>
+            <div class="node-row bg-topology">
+                <div class="node-icon"><img src="src/nodes/icons/topology.svg" alt="topology"></div>
+                <div class="node-label">topology</div>
+            </div>
+            <div class="node-row bg-delete-resource">
+                <div class="node-icon"><img src="src/nodes/icons/delete-resource.svg" alt="delete-resource"></div>
+                <div class="node-label">delete-resource</div>
+            </div>
+            <div class="node-row bg-tasklist-query">
+                <div class="node-icon"><img src="src/nodes/icons/tasklist-query.svg" alt="tasklist-query"></div>
+                <div class="node-label">tasklist-query</div>
+            </div>
+            <div class="node-row bg-modify-process-instance">
+                <div class="node-icon"><img src="src/nodes/icons/modify-process-instance.svg" alt="modify-process-instance"></div>
+                <div class="node-label">modify-process-instance</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
